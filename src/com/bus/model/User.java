@@ -4,11 +4,11 @@ public class User {
     private int userId;
     private String name;
     private String email;
-    private String phone;
+    private int phone;
     private String password;
     private String role;
 
-    public User(String name, String email, String phone, String password, String role){
+    public User(String name, String email, int phone, String password, String role){
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -28,7 +28,7 @@ public class User {
         return this.email;
     }
 
-    public String getPhone(){
+    public int getPhone(){
         return this.phone;
     }
 

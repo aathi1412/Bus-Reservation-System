@@ -1,6 +1,8 @@
 package com.bus.main;
 import java.util.Scanner;
 
+import com.bus.model.User;
+
 public class Main {
     public static void main(String[] args) {
         
@@ -20,8 +22,8 @@ public class Main {
             int userInputOption = sc.nextInt();
             
             if(userInputOption == 1){
-
-                System.out.println("working.........");
+                registerUser(sc);
+                System.out.println("Registered.........");
             }
             else{
                 on = false;
@@ -29,5 +31,24 @@ public class Main {
         }
 
         sc.close();
+    }
+
+    public static void registerUser(Scanner sc){
+
+        System.out.println("New User Registration:");
+        System.out.print("Enter Name: ");
+        String name = sc.next();
+        System.out.println("Enter Phone Number (+91): ");
+        int phone = sc.nextInt();
+        System.out.println("Enter email: ");
+        String email = sc.next();
+        System.out.println("Enter Password: ");
+        String password = sc.next();
+        String role = "USER";
+        
+
+        User user = new User(name, email, phone, password, role);
+        System.out.println(user.getName());
+        
     }
 }
