@@ -67,9 +67,27 @@ public class Main {
         String email = sc.next();
         System.out.print("Enter Password:");
         String password = sc.next();
-        System.out.print("Enter role: ( USER / ADMIN )");
-        String role = sc.next();
+
 
         currentUser = userService.login(email, password);
+
+        if(currentUser == null){
+            System.out.println("Invalid Credintials");
+            return;
+        }
+
+        if(currentUser.getRole().equals("ADMIN")){
+            adminMenu();
+        } else{
+            userMenu();
+        }
+    }
+
+    private static void adminMenu(){
+
+    }
+
+    private static void userMenu(){
+
     }
 }
