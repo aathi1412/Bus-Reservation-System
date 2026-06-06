@@ -2,30 +2,40 @@ package com.bus.main;
 import java.util.Scanner;
 
 import com.bus.model.User;
+import com.bus.service.BookingService;
+import com.bus.service.BusService;
+import com.bus.service.UserService;
 
 public class Main {
+
+    private static UserService userService = new UserService();
+    private static BookingService bookingService = new BookingService();
+    private static BusService busService = new BusService();
+
+    private static User currentUser;
     public static void main(String[] args) {
+
         
         Scanner sc = new Scanner(System.in);
-        boolean on = true;
+        System.out.println("===== BUS RESERVATION SYSTEM =====");
+        System.out.println("1. Register");
+        System.out.println("2. Login");
+        System.out.println("3. Exit");
 
-        while (on) {
-            System.out.println("===== BUS RESERVATION SYSTEM =====");
-            System.out.println("1. Register");
-            System.out.println("2. Login");
-            System.out.println("3. Exit");
+        int choice = sc.nextInt();
 
-            int userInputOption = sc.nextInt();
-            
-            if(userInputOption == 1){
+        switch (choice) {
+            case 1:
                 registerUser(sc);
-                System.out.println("Registered.........");
-            }else if (userInputOption == 2) {
+                break;
+
+            case 2:
                 login(sc);
-            }
-            else{
-                on = false;
-            }
+                break;
+
+            default:
+                System.out.println("Thank you (Arigatho)");
+                break;
         }
 
         sc.close();
@@ -33,30 +43,33 @@ public class Main {
 
     private static void registerUser(Scanner sc){
 
-        System.out.println("New User Registration:");
+        System.out.println("------ New User Registration ------");
         System.out.print("Enter Name: ");
         String name = sc.next();
-        System.out.println("Enter Phone Number (+91): ");
+        System.out.print("Enter Phone Number (+91): ");
         int phone = sc.nextInt();
-        System.out.println("Enter email: ");
+        System.out.print("Enter email: ");
         String email = sc.next();
-        System.out.println("Enter Password: ");
+        System.out.print("Enter Password: ");
         String password = sc.next();
         String role = "USER";
         
 
         User user = new User(name, email, phone, password, role);
-        System.out.println(user.getName());
+        userService.register(user);
 
     }
 
     private static void login(Scanner sc) {
+
         System.out.println("-------- Login --------");
-        System.out.println("Enter Email:");
+        System.out.print("Enter Email:");
         String email = sc.next();
-        System.out.println("Enter Password:");
+        System.out.print("Enter Password:");
         String password = sc.next();
-        System.out.println("Enter role: ( USER / ADMIN )");
+        System.out.print("Enter role: ( USER / ADMIN )");
         String role = sc.next();
+
+        currentUser = userService.login(email, password);
     }
 }
