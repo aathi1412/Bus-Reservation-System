@@ -1,12 +1,12 @@
 package com.bus.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.bus.model.User;
-import com.bus.util.dbConnection;
+import com.bus.util.DBConnection;
 
 public class UserDAO {
 
@@ -16,7 +16,7 @@ public class UserDAO {
         String query = "INSERT INTO users(name, email, phone, password, role) VALUES(?,?,?,?,?);";
 
         try (
-            Connection con = dbConnection.getConnection();
+            Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(query);
         ) {            
             ps.setString(1, user.getName());
@@ -34,6 +34,24 @@ public class UserDAO {
     }
 
     public User validateUser(String email, String password){
-        return null ;
+        String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+        ) {
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                User user = new User();
+                
+            }
+            
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

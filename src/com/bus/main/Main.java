@@ -2,15 +2,15 @@ package com.bus.main;
 import java.util.Scanner;
 
 import com.bus.model.User;
-import com.bus.service.BookingService;
-import com.bus.service.BusService;
+// import com.bus.service.BookingService;cls
+// import com.bus.service.BusService;
 import com.bus.service.UserService;
 
 public class Main {
 
     private static UserService userService = new UserService();
-    private static BookingService bookingService = new BookingService();
-    private static BusService busService = new BusService();
+    // private static BookingService bookingService = new BookingService();
+    // private static BusService busService = new BusService();
 
     private static User currentUser;
     public static void main(String[] args) {
