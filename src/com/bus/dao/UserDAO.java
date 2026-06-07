@@ -47,11 +47,20 @@ public class UserDAO {
             
             if(rs.next()){
                 User user = new User();
-                
+
+                user.setUserId(rs.getInt("user_id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+
+                return user;
             }
             
         } catch (SQLException e) {
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 }
