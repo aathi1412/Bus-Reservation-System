@@ -1,0 +1,14 @@
+# Java build files
+out/
+
+# VS Code settings
+.vscode/
+
+# Temporary files
+*.class
+
+# Ignore sources list
+sources.txt
+
+#Ignore built command file
+built.bat
