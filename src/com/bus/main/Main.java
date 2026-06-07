@@ -2,15 +2,15 @@ package com.bus.main;
 import java.util.Scanner;
 
 import com.bus.model.User;
-// import com.bus.service.BookingService;cls
-// import com.bus.service.BusService;
+import com.bus.service.BookingService;
+import com.bus.service.BusService;
 import com.bus.service.UserService;
 
 public class Main {
 
     private static UserService userService = new UserService();
-    // private static BookingService bookingService = new BookingService();
-    // private static BusService busService = new BusService();
+    private static BookingService bookingService = new BookingService();
+    private static BusService busService = new BusService();
 
     private static User currentUser;
     public static void main(String[] args) {
@@ -77,17 +77,53 @@ public class Main {
         }
 
         if(currentUser.getRole().equals("ADMIN")){
-            adminMenu();
+            adminMenu(sc);
         } else{
-            userMenu();
+            userMenu(sc);
         }
     }
 
-    private static void adminMenu(){
+    private static void adminMenu(Scanner sc){
+        
+        System.out.println("1. Add Bus");
+        System.out.println("2. View Buses");
+        System.out.println("3. Update Bus");
+        System.out.println("4. Delete Bus");
+        System.out.println("5. View Bookings");
 
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                busService.addBus();
+                break;
+
+            case 2:
+                busService.viewAllBuses();
+                break;
+
+            case 3:
+                busService.updateBus();
+                break;
+
+            case 4:
+                busService.deleteBus();
+                break;
+
+            case 5:
+                busService.viewAllBuses();
+                break;
+
+            case 6:
+                currentUser = null;
+                return;
+
+            default:
+                System.out.println("Invalid choice");
+        }
     }
 
-    private static void userMenu(){
+    private static void userMenu(Scanner sc){
 
     }
 }
