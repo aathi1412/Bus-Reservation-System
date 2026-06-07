@@ -8,7 +8,11 @@ public class UserService {
     private static UserDAO userDAO = new UserDAO();
 
     public void register(User user){
-        userDAO.registerUser(user);
+        if(userDAO.registerUser(user)){
+            System.out.println("Registration Successfull");
+        }else{
+            System.out.println("Registration Failed");
+        }
     }
 
     public User login(String email, String password){
