@@ -125,5 +125,42 @@ public class Main {
 
     private static void userMenu(Scanner sc){
 
+        System.out.println("1. Search Bus");
+        System.out.println("2. View All Buses");
+        System.out.println("3. Book Ticket");
+        System.out.println("4. My Bookings");
+        System.out.println("5. Cancel Booking");
+        System.out.println("6. Logout");
+
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                busService.searchBus();
+                break;
+
+            case 2:
+                busService.viewAllBuses();
+                break;
+
+            case 3:
+                bookingService.bookTicket();
+                break;
+
+            case 4:
+                bookingService.myBookings();
+                break;
+
+            case 5:
+                bookingService.cancekBooking();
+                break;
+
+            case 6:
+                currentUser = null;
+                return;
+
+            default:
+                System.out.println("Invalid choice");
+        }
     }
 }
