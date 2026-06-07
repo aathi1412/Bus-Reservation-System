@@ -1,6 +1,10 @@
+ -- Create Database
+
 CREATE DATABASE IF NOT EXISTS bus_reservation;
 
 USE bus_reservation;
+
+-- Create Table Users 
 
 CREATE TABLE users(
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -10,6 +14,8 @@ CREATE TABLE users(
     password VARCHAR(100) NOT NULL,
     role VARCHAR(10) NOT NULL
 );
+
+-- Create Table buses
 
 CREATE TABLE buses(
     bus_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,6 +28,8 @@ CREATE TABLE buses(
     bus_type VARCHAR(10) NOT NULL
 );
 
+-- Create Table booking
+
 CREATE TABLE bookings(
     booking_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -32,6 +40,8 @@ CREATE TABLE bookings(
     FOREIGN KEY (user_id) REFERENCES users (user_id),
     FOREIGN KEY (bus_id) REFERENCES buses (bus_id)
 );
+
+-- Insert admin default 
 
 INSERT INTO users(name, email, phone, password, role)
 VALUES(
