@@ -1,29 +1,88 @@
 package com.bus.model;
 public class Bus{
 
-    private final String busNo;
-    private int capacity;
-    private final String busType;
+    private int busId;
+    private String busName;
+    private String source;
+    private String destination;
+    private int totalSeats;
+    private int availableSeats;
+    private String busType;
+    
 
-    public Bus(String busNo, int capacity, String busType){
-        this.busNo = busNo;
-        this.capacity = capacity;
+    public Bus(String busName, String source, String destination, int totalSeats, int availableSeats, String busType){
+        this.busName = busName;
+        this.source = source;
+        this.destination = destination;
+        this.totalSeats = totalSeats;
+        this.availableSeats = availableSeats;
+        this.busType = busType;
         this.busType = busType;
     }
 
-    public String getBusNo(){
-        return this.busNo;
+
+    public int getBusId() {
+        return busId;
     }
 
-    public void setCapacity(int capacity){
-        this.capacity = capacity;
+
+    public String getBusName() {
+        return busName;
     }
 
-    public int getCapacity(){
-        return this.capacity;
+
+    public void setBusName(String busName) {
+        this.busName = busName;
     }
 
-    public String getBusType(){
-        return this.busType;
+
+    public String getSource() {
+        return source;
     }
+
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+
+    public String getDestination() {
+        return destination;
+    }
+
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+
+    public int getTotalSeats() {
+        return totalSeats;
+    }
+
+
+    public void setTotalSeats(int totalSeats) {
+        this.totalSeats = totalSeats;
+    }
+
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+
+    public String getBusType() {
+        return busType;
+    }
+
+
+    public void setBusType(String busType) {
+        this.busType = busType;
+    }
+
 }
