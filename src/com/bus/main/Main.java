@@ -47,7 +47,7 @@ public class Main {
         System.out.print("Enter Name: ");
         String name = sc.next();
         System.out.print("Enter Phone Number (+91): ");
-        int phone = sc.nextInt();
+        String phone = sc.next();
         System.out.print("Enter email: ");
         String email = sc.next();
         System.out.print("Enter Password: ");
