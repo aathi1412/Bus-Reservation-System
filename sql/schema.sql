@@ -18,7 +18,8 @@ CREATE TABLE buses(
     destination VARCHAR(50) NOT NULL,
     total_seats INT NOT NULL,
     available_seats INT NOT NULL,
-    fare DECIMAL(10,2) NOT NULL
+    price DECIMAL(10,2) NOT NULL,
+    bus_type VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE bookings(
