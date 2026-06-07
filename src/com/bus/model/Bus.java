@@ -7,16 +7,19 @@ public class Bus{
     private String destination;
     private int totalSeats;
     private int availableSeats;
+    private double price;
     private String busType;
     
+    public Bus(){
+    }
 
-    public Bus(String busName, String source, String destination, int totalSeats, int availableSeats, String busType){
+    public Bus(String busName, String source, String destination, int totalSeats, int availableSeats, double price, String busType){
         this.busName = busName;
         this.source = source;
         this.destination = destination;
         this.totalSeats = totalSeats;
         this.availableSeats = availableSeats;
-        this.busType = busType;
+        this.price = price;
         this.busType = busType;
     }
 
@@ -25,6 +28,11 @@ public class Bus{
         return busId;
     }
 
+
+    public void setBusId(int busId) {
+        this.busId = busId;
+    }
+    
 
     public String getBusName() {
         return busName;
@@ -83,6 +91,15 @@ public class Bus{
 
     public void setBusType(String busType) {
         this.busType = busType;
+    }
+
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

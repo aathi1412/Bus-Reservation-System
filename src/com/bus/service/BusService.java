@@ -2,11 +2,11 @@ package com.bus.service;
 
 public class BusService {
 
-    public void viewAllBuses() {
+    public void addBus() {
         
     }
 
-    public void addBus() {
+    public void viewAllBuses() {
         
     }
 
