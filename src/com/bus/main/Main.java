@@ -95,7 +95,7 @@ public class Main {
 
         switch (choice) {
             case 1:
-                busService.addBus();
+                busService.addBus(sc);
                 break;
 
             case 2:

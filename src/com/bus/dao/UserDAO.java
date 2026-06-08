@@ -17,7 +17,7 @@ public class UserDAO {
 
         try (
             Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement(query);
+            PreparedStatement ps = con.prepareCall(query);
         ) {            
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
