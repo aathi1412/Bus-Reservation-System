@@ -11,18 +11,20 @@ public class BusService {
 
     public void addBus(Scanner sc) {
 
+        System.out.println("---------Add a New Bus----------");
+
         System.out.print("Enter Bus Name: ");
-        String busName = sc.next();
+        String busName = sc.nextLine();
         System.out.print("Enter Source Departure Place of Bus: ");
-        String source = sc.next();
+        String source = sc.nextLine();
         System.out.print("Enter the Destination of Bus: ");
-        String destination = sc.next();
-        System.out.print("Enter Total Seats in Bus");
-        int seats = sc.nextInt();
-        System.out.print("Enter Bus ticket Fare");
-        double price = sc.nextDouble();
-        System.out.print("Enter Bus Type ( AC / NON AC )");
-        String busType = sc.next();
+        String destination = sc.nextLine();
+        System.out.print("Enter Total Seats in Bus: ");
+        int seats = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter Bus ticket Fare: ");
+        double price = Double.parseDouble(sc.nextLine());
+        System.out.print("Enter Bus Type ( AC / NON AC ): ");
+        String busType = sc.nextLine();
 
         Bus bus = new Bus(busName, source, destination, seats, seats, price, busType);
         boolean message = busDAO.addBusToDB(bus);

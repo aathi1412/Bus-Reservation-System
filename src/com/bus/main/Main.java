@@ -18,11 +18,14 @@ public class Main {
         
         Scanner sc = new Scanner(System.in);
         System.out.println("===== BUS RESERVATION SYSTEM =====");
+        System.out.println();
         System.out.println("1. Register");
         System.out.println("2. Login");
         System.out.println("3. Exit");
+        System.out.println();
 
-        int choice = sc.nextInt();
+        System.out.print("Enter Choice: ");
+        int choice = Integer.parseInt(sc.nextLine());
 
         switch (choice) {
             case 1:
@@ -44,15 +47,18 @@ public class Main {
     private static void registerUser(Scanner sc){
 
         System.out.println("------ New User Registration ------");
+        System.out.println();
+
         System.out.print("Enter Name: ");
-        String name = sc.next();
+        String name = sc.nextLine();
         System.out.print("Enter Phone Number (+91): ");
-        String phone = sc.next();
+        String phone = sc.nextLine();
         System.out.print("Enter email: ");
-        String email = sc.next();
+        String email = sc.nextLine();
         System.out.print("Enter Password: ");
-        String password = sc.next();
+        String password = sc.nextLine();
         String role = "USER";
+        System.out.println();
         
 
         User user = new User(name, email, phone, password, role);
@@ -63,10 +69,13 @@ public class Main {
     private static void login(Scanner sc) {
 
         System.out.println("-------- Login --------");
+        System.out.println();
+
         System.out.print("Enter Email:");
-        String email = sc.next();
+        String email = sc.nextLine();
         System.out.print("Enter Password:");
-        String password = sc.next();
+        String password = sc.nextLine();
+        System.out.println();
 
 
         currentUser = userService.login(email, password);
@@ -77,8 +86,12 @@ public class Main {
         }
 
         if(currentUser.getRole().equals("ADMIN")){
+            System.out.println("Login Successful - ADMIN");
+            System.out.println();
             adminMenu(sc);
         } else{
+            System.out.println("Login Successful - USER");
+            System.out.println();
             userMenu(sc);
         }
     }
@@ -90,8 +103,11 @@ public class Main {
         System.out.println("3. Update Bus");
         System.out.println("4. Delete Bus");
         System.out.println("5. View Bookings");
+        System.out.println();
 
-        int choice = sc.nextInt();
+        System.out.print("Enter Choice: ");
+        int choice = Integer.parseInt(sc.nextLine());
+        System.out.println();
 
         switch (choice) {
             case 1:
@@ -131,8 +147,11 @@ public class Main {
         System.out.println("4. My Bookings");
         System.out.println("5. Cancel Booking");
         System.out.println("6. Logout");
+        System.out.println();
 
-        int choice = sc.nextInt();
+        System.out.print("Enter Choice: ");
+        int choice = Integer.parseInt(sc.nextLine());
+        System.out.println();
 
         switch (choice) {
             case 1:
