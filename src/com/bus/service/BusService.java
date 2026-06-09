@@ -57,6 +57,7 @@ public class BusService {
                 bus.getBusType()
             );
         }
+        System.out.println();
     }
 
     public void updateBus() {
