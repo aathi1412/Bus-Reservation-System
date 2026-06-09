@@ -97,8 +97,8 @@ public class Main {
     }
 
     private static void adminMenu(Scanner sc){
-        
-        System.out.println("1. Add Bus");
+        while(true){
+            System.out.println("1. Add Bus");
         System.out.println("2. View Buses");
         System.out.println("3. Update Bus");
         System.out.println("4. Delete Bus");
@@ -136,6 +136,7 @@ public class Main {
 
             default:
                 System.out.println("Invalid choice");
+        }
         }
     }
 
