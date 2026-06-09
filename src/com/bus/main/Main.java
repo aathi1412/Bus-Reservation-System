@@ -36,8 +36,12 @@ public class Main {
                     login(sc);
                     break;
 
-                default:
+                case 3:
                     System.out.println("Thank you (Arigatho)");
+                    return;
+
+                default:
+                    System.out.println("Invalid Choice");
                     break;
             }
         }
@@ -67,32 +71,39 @@ public class Main {
     }
 
     private static void login(Scanner sc) {
-
-        System.out.println("-------- Login --------");
-        System.out.println();
-
-        System.out.print("Enter Email:");
-        String email = sc.nextLine();
-        System.out.print("Enter Password:");
-        String password = sc.nextLine();
-        System.out.println();
-
-
-        currentUser = userService.login(email, password);
-
-        if(currentUser == null){
-            System.out.println("Invalid Credintials");
-            return;
-        }
-
-        if(currentUser.getRole().equals("ADMIN")){
-            System.out.println("Login Successful - ADMIN");
+        while (true) {
+            System.out.println("-------- Login --------");
             System.out.println();
-            adminMenu(sc);
-        } else{
-            System.out.println("Login Successful - USER");
+
+            System.out.print("Enter Email:");
+            String email = sc.nextLine();
+            System.out.print("Enter Password:");
+            String password = sc.nextLine();
             System.out.println();
-            userMenu(sc);
+
+
+            currentUser = userService.login(email, password);
+
+            if(currentUser == null){
+                System.out.println("Invalid Credintials");
+                System.out.print("Y to Login Again / N to back to Main Menu: ");
+                String yesOrNo = sc.nextLine();
+                if(yesOrNo.equalsIgnoreCase("Y")){
+                    continue;
+                }else {
+                    return;
+                }
+            }
+
+            if(currentUser.getRole().equals("ADMIN")){
+                System.out.println("Login Successful - ADMIN");
+                System.out.println();
+                adminMenu(sc);
+            } else{
+                System.out.println("Login Successful - USER");
+                System.out.println();
+                userMenu(sc);
+            }
         }
     }
 
