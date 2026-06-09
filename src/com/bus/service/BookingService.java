@@ -13,5 +13,9 @@ public class BookingService {
     public void cancekBooking() {
         
     }
+
+    public void viewAllBookings() {
+        
+    }
     
 }
