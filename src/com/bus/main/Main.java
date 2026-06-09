@@ -14,34 +14,34 @@ public class Main {
 
     private static User currentUser;
     public static void main(String[] args) {
-
-        
         Scanner sc = new Scanner(System.in);
-        System.out.println("===== BUS RESERVATION SYSTEM =====");
-        System.out.println();
-        System.out.println("1. Register");
-        System.out.println("2. Login");
-        System.out.println("3. Exit");
-        System.out.println();
 
-        System.out.print("Enter Choice: ");
-        int choice = Integer.parseInt(sc.nextLine());
+        while (true) {
+            System.out.println("===== BUS RESERVATION SYSTEM =====");
+            System.out.println();
+            System.out.println("1. Register");
+            System.out.println("2. Login");
+            System.out.println("3. Exit");
+            System.out.println();
 
-        switch (choice) {
-            case 1:
-                registerUser(sc);
-                break;
+            System.out.print("Enter Choice: ");
+            int choice = Integer.parseInt(sc.nextLine());
 
-            case 2:
-                login(sc);
-                break;
+            switch (choice) {
+                case 1:
+                    registerUser(sc);
+                    break;
 
-            default:
-                System.out.println("Thank you (Arigatho)");
-                break;
+                case 2:
+                    login(sc);
+                    break;
+
+                default:
+                    System.out.println("Thank you (Arigatho)");
+                    break;
+            }
         }
-
-        sc.close();
+        
     }
 
     private static void registerUser(Scanner sc){
@@ -99,88 +99,92 @@ public class Main {
     private static void adminMenu(Scanner sc){
         while(true){
             System.out.println("1. Add Bus");
-        System.out.println("2. View Buses");
-        System.out.println("3. Update Bus");
-        System.out.println("4. Delete Bus");
-        System.out.println("5. View Bookings");
-        System.out.println();
+            System.out.println("2. View Buses");
+            System.out.println("3. Update Bus");
+            System.out.println("4. Delete Bus");
+            System.out.println("5. View Bookings");
+            System.out.println("6. Logout");
+            System.out.println();
 
-        System.out.print("Enter Choice: ");
-        int choice = Integer.parseInt(sc.nextLine());
-        System.out.println();
+            System.out.print("Enter Choice: ");
+            int choice = Integer.parseInt(sc.nextLine());
+            System.out.println();
 
-        switch (choice) {
-            case 1:
-                busService.addBus(sc);
-                break;
+            switch (choice) {
+                case 1:
+                    busService.addBus(sc);
+                    break;
 
-            case 2:
-                busService.viewAllBuses();
-                break;
+                case 2:
+                    busService.viewAllBuses();
+                    break;
 
-            case 3:
-                busService.updateBus();
-                break;
+                case 3:
+                    busService.updateBus();
+                    break;
 
-            case 4:
-                busService.deleteBus();
-                break;
+                case 4:
+                    busService.deleteBus();
+                    break;
 
-            case 5:
-                busService.viewAllBuses();
-                break;
+                case 5:
+                    bookingService.viewAllBookings();
+                    break;
 
-            case 6:
-                currentUser = null;
-                return;
+                case 6:
+                    System.out.println("Logout Successfully");
+                    currentUser = null;
+                    return;
 
-            default:
-                System.out.println("Invalid choice");
-        }
+                default:
+                    System.out.println("Invalid choice");
+            }
         }
     }
 
     private static void userMenu(Scanner sc){
+        while (true) {
+            System.out.println("1. Search Bus");
+            System.out.println("2. View All Buses");
+            System.out.println("3. Book Ticket");
+            System.out.println("4. My Bookings");
+            System.out.println("5. Cancel Booking");
+            System.out.println("6. Logout");
+            System.out.println();
 
-        System.out.println("1. Search Bus");
-        System.out.println("2. View All Buses");
-        System.out.println("3. Book Ticket");
-        System.out.println("4. My Bookings");
-        System.out.println("5. Cancel Booking");
-        System.out.println("6. Logout");
-        System.out.println();
+            System.out.print("Enter Choice: ");
+            int choice = Integer.parseInt(sc.nextLine());
+            System.out.println();
 
-        System.out.print("Enter Choice: ");
-        int choice = Integer.parseInt(sc.nextLine());
-        System.out.println();
+            switch (choice) {
+                case 1:
+                    busService.searchBus();
+                    break;
 
-        switch (choice) {
-            case 1:
-                busService.searchBus();
-                break;
+                case 2:
+                    busService.viewAllBuses();
+                    break;
 
-            case 2:
-                busService.viewAllBuses();
-                break;
+                case 3:
+                    bookingService.bookTicket();
+                    break;
 
-            case 3:
-                bookingService.bookTicket();
-                break;
+                case 4:
+                    bookingService.myBookings();
+                    break;
 
-            case 4:
-                bookingService.myBookings();
-                break;
+                case 5:
+                    bookingService.cancekBooking();
+                    break;
 
-            case 5:
-                bookingService.cancekBooking();
-                break;
+                case 6:
+                    System.out.println("Logout Successfully");
+                    currentUser = null;
+                    return;
 
-            case 6:
-                currentUser = null;
-                return;
-
-            default:
-                System.out.println("Invalid choice");
+                default:
+                    System.out.println("Invalid choice");
+            }
         }
     }
 }
