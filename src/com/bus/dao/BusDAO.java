@@ -2,7 +2,9 @@ package com.bus.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.bus.model.Bus;
 import com.bus.util.DBConnection;
@@ -29,6 +31,38 @@ public class BusDAO {
             System.out.println(e.getMessage());
             return false;
         }
-        
+    }
+
+    public ArrayList<Bus> getAllBuses(){
+        String query = "select * from buses";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareCall(query);
+        ) {
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<Bus> buses = new ArrayList<>();
+
+            while(rs.next()){
+                Bus bus = new Bus();
+                
+                bus.setBusId(rs.getInt("bus_id"));
+                bus.setBusName(rs.getString("bus_name"));
+                bus.setSource(rs.getString("source"));
+                bus.setDestination(rs.getString("destination"));
+                bus.setTotalSeats(rs.getInt("total_seats"));
+                bus.setAvailableSeats(rs.getInt("available_seats"));
+                bus.setPrice(rs.getDouble("price"));
+                bus.setBusType(rs.getString("bus_type"));
+
+                buses.add(bus);
+            }
+
+            return buses;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
