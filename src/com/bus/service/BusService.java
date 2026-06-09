@@ -1,5 +1,6 @@
 package com.bus.service;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.bus.dao.BusDAO;
@@ -38,7 +39,24 @@ public class BusService {
     }
 
     public void viewAllBuses() {
-        
+        System.out.printf(
+            "%-5s %-20s %-15s %-15s %-10s %-10s%n",
+            "ID", "Bus Name", "Source", "Destination", "Seats", "Price"
+        );
+        ArrayList<Bus> buses = busDAO.getAllBuses();
+        for (Bus bus : buses) {
+            System.out.printf(
+                "%-5s %-20s %-15s %-15s %-10s %-10s%n",
+                bus.getBusId(),
+                bus.getBusName(),
+                bus.getSource(),
+                bus.getDestination(), 
+                bus.getTotalSeats(),
+                bus.getAvailableSeats(),
+                bus.getPrice(),
+                bus.getBusType()
+            );
+        }
     }
 
     public void updateBus() {
