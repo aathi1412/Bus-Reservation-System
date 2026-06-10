@@ -131,7 +131,7 @@ public class Main {
                     break;
 
                 case 3:
-                    busService.updateBus();
+                    busService.updateBus(sc);
                     break;
 
                 case 4:
