@@ -36,6 +36,8 @@ CREATE TABLE bookings(
     bus_id INT NOT NULL,
     seats_booked INT NOT NULL,
     booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    price DECIMAL(10,2) NOT NULL,
+    status VARCHAR(15) NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users (user_id),
     FOREIGN KEY (bus_id) REFERENCES buses (bus_id)

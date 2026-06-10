@@ -1,6 +1,5 @@
 package com.bus.model;
 
-import java.sql.Timestamp;
 
 public class Booking {
 
@@ -8,7 +7,9 @@ public class Booking {
     private int userId;
     private int busId;
     private int seatsBooked;
-    private Timestamp bookingDate;
+    private String bookingDate;
+    private double price;
+    private String status;
 
     public Booking(){
     }
@@ -45,12 +46,28 @@ public class Booking {
         this.seatsBooked = seatsBooked;
     }
 
-    public Timestamp getBookingDate() {
+    public String getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(Timestamp bookingDate) {
+    public void setBookingDate(String bookingDate) {
         this.bookingDate = bookingDate;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     

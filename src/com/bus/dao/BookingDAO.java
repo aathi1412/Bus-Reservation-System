@@ -2,14 +2,19 @@ package com.bus.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.bus.model.Bus;
+import com.bus.model.Booking;
 import com.bus.util.DBConnection;
+import com.bus.util.FormatDateTime;
 
 public class BookingDAO {
     
     private static BusDAO busDAO = new BusDAO();
+    private static FormatDateTime formatDateTime = new FormatDateTime();
 
     public boolean bookTicket(int userId, int busId, int seats){
         Bus bus = busDAO.getBus(busId);
@@ -57,4 +62,34 @@ public class BookingDAO {
         }
         return true;
     }
+
+	public ArrayList<Booking> myBookings(int userId) {
+        String query = "SELECT booking_id, seats_booked, booking_date, price, status FROM bookings WHERE user_id = ?";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+        ) {
+            ps.setInt(1, userId);
+            
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Booking> bookings = new ArrayList<>();
+
+            while(rs.next()){
+                Booking booking = new Booking();
+
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setSeatsBooked(rs.getInt("seats_booked"));
+                booking.setBookingDate(formatDateTime.formatDate(rs.getTimestamp("booking_date")));
+                booking.setPrice(rs.getDouble("price"));
+                booking.setStatus(rs.getString("status"));
+
+                bookings.add(booking);
+            }
+            return bookings;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+	}
 }

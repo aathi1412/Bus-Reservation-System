@@ -181,7 +181,7 @@ public class Main {
                     break;
 
                 case 4:
-                    bookingService.myBookings();
+                    bookingService.myBookings(userId);
                     break;
 
                 case 5:
