@@ -11,13 +11,14 @@ public class BookingDAO {
     
     private static BusDAO busDAO = new BusDAO();
 
-    public void bookTicket(int userId, int busId, int seats){
+    public boolean bookTicket(int userId, int busId, int seats){
         Bus bus = busDAO.getBus(busId);
         int available_seats = bus.getAvailableSeats();
 
         if(available_seats < seats){
-            System.out.println("Unable to Book Ticket" + available_seats + "Seats only Available");
-            return;
+            System.out.println("Unable to Book Ticket " + seats + ", " + available_seats + "Seats only Available");
+            System.out.println("Retry to book less than or equal" + available_seats  + "Seats");
+            return false;
         }
 
         String query1 = "UPDATE buses SET available_seats = available_seats - ? WHERE bus_id = ? AND available_seats >= ?;";
@@ -46,13 +47,14 @@ public class BookingDAO {
             }else{
                 con.rollback();
             }
-            
         } catch (SQLException e) {
             try {
                 con.rollback();
             } catch (SQLException ex) {
                 ex.printStackTrace();
+                return false;
             }
         }
+        return true;
     }
 }

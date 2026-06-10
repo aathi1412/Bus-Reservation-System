@@ -46,6 +46,7 @@ public class BusService {
     }
 
     public void updateBus(Scanner sc) {
+        System.out.println();
         System.out.println("Available Buses to Update");
         System.out.println();
         viewAllBuses();
@@ -118,11 +119,12 @@ public class BusService {
             busDAO.updateBusDetails(busId, column, value);
 
             System.out.print("Y to update other field / N for Back to Admin Menu: ");
-            String yN = sc.nextLine();
-            if(yN.equalsIgnoreCase("N")){
+            String YN = sc.nextLine();
+            if(YN.equalsIgnoreCase("Y")){
+                continue;
+            }else{
                 return;
             }
-            System.out.println();
         }
         
     }
