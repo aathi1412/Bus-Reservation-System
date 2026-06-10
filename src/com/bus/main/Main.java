@@ -102,7 +102,7 @@ public class Main {
             } else{
                 System.out.println("Login Successful - USER");
                 System.out.println();
-                userMenu(sc);
+                userMenu(sc, currentUser.getUserId());
             }
         }
     }
@@ -153,7 +153,7 @@ public class Main {
         }
     }
 
-    private static void userMenu(Scanner sc){
+    private static void userMenu(Scanner sc, int userId){
         while (true) {
             System.out.println("1. Search Bus");
             System.out.println("2. View All Buses");
@@ -169,7 +169,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    busService.searchBus();
+                    busService.searchBus(sc);
                     break;
 
                 case 2:
@@ -177,7 +177,7 @@ public class Main {
                     break;
 
                 case 3:
-                    bookingService.bookTicket();
+                    bookingService.bookTicket(sc, userId);
                     break;
 
                 case 4:
