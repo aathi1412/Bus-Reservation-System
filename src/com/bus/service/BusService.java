@@ -5,10 +5,12 @@ import java.util.Scanner;
 
 import com.bus.dao.BusDAO;
 import com.bus.model.Bus;
+import com.bus.util.PrintInFormat;
 
 public class BusService {
 
-    private BusDAO busDAO = new BusDAO();
+    private static BusDAO busDAO = new BusDAO();
+    private static PrintInFormat printInFormat = new PrintInFormat();
 
     public void addBus(Scanner sc) {
 
@@ -39,25 +41,8 @@ public class BusService {
     }
 
     public void viewAllBuses() {
-        System.out.printf(
-            "%-5s %-20s %-15s %-15s %-10s %-10s%n",
-            "ID", "Bus Name", "Source", "Destination", "Seats", "Price"
-        );
         ArrayList<Bus> buses = busDAO.getAllBuses();
-        for (Bus bus : buses) {
-            System.out.printf(
-                "%-5s %-20s %-15s %-15s %-10s %-10s%n",
-                bus.getBusId(),
-                bus.getBusName(),
-                bus.getSource(),
-                bus.getDestination(), 
-                bus.getTotalSeats(),
-                bus.getAvailableSeats(),
-                bus.getPrice(),
-                bus.getBusType()
-            );
-        }
-        System.out.println();
+        printInFormat.printBuses(buses);
     }
 
     public void updateBus(Scanner sc) {
@@ -154,8 +139,16 @@ public class BusService {
         else System.out.println("Bus Found!");
     }
 
-    public void searchBus() {
-        
+    public void searchBus(Scanner sc) {
+        System.out.print("Enter Source: ");
+        String source = sc.nextLine();
+        System.out.print("Enter Destination: ");
+        String destination = sc.nextLine();
+        System.out.println();
+
+        ArrayList<Bus> buses = busDAO.getBuses(source, destination);
+        printInFormat.printBuses(buses);
+
     }
     
 }
