@@ -12,3 +12,6 @@ sources.txt
 
 #Ignore built command file
 built.bat
+
+# Ignore test file
+test.java
