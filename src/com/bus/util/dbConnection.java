@@ -1,23 +1,42 @@
 package com.bus.util;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBConnection{
     
-    private static Connection con;
-    private static final String url = "jdbc:mysql://localhost:3306/bus_reservation";
-    private static final String user = "root";
-    private static final String pass = "Zoro@2004";
+    private static String url;
+    private static String user;
+    private static String pass;
+
+    static {
+        try {
+            Properties props = new Properties();
+
+            InputStream is = DBConnection.class
+                    .getClassLoader()
+                    .getResourceAsStream("db.properties");
+
+            props.load(is);
+
+            url = props.getProperty("db.url");
+            user = props.getProperty("db.user");
+            pass = props.getProperty("db.password");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Connection getConnection(){
         try {
-            con =  DriverManager.getConnection(url, user, pass);
+            return DriverManager.getConnection(url, user, pass);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Database connection failed", e);
         }
-        return con;
     }
     
 }
