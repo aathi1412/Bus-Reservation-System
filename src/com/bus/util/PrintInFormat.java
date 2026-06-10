@@ -2,6 +2,7 @@ package com.bus.util;
 
 import java.util.ArrayList;
 
+import com.bus.model.Booking;
 import com.bus.model.Bus;
 
 public class PrintInFormat {
@@ -23,6 +24,25 @@ public class PrintInFormat {
                 bus.getAvailableSeats(),
                 bus.getPrice(),
                 bus.getBusType()
+            );
+        }
+        System.out.println();
+    }
+
+    public void printBookings(ArrayList<Booking> bookings){
+        System.out.printf(
+            "%-14s %-21s %-18s %-15s %-13s%n",
+            "Booking ID", "Seats Booked", "Booking Date", "Price", "Status"
+        );
+        
+        for (Booking booking : bookings) {
+            System.out.printf(
+                "%-14s %-18s %-22s %-11s %-13s%n",
+                booking.getBookingId(),
+                booking.getSeatsBooked(),
+                booking.getBookingDate(),
+                booking.getPrice()+" Rs",
+                booking.getStatus()
             );
         }
         System.out.println();
