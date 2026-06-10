@@ -17,10 +17,10 @@ public class UserDAO {
 
         try (
             Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareCall(query);
+            PreparedStatement ps = con.prepareStatement(query);
         ) {            
             ps.setString(1, user.getName());
-            ps.setString(2, user.getEmail());
+            ps.setString(2, user.getEmail().toLowerCase());
             ps.setString(3, user.getPhone());
             ps.setString(4, user.getPassword());
             ps.setString(5, user.getRole());
@@ -40,7 +40,7 @@ public class UserDAO {
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(query);
         ) {
-            ps.setString(1, email);
+            ps.setString(1, email.toLowerCase());
             ps.setString(2, password);
 
             ResultSet rs = ps.executeQuery();
