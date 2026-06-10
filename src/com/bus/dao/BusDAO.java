@@ -108,9 +108,9 @@ public class BusDAO {
             int rows = ps.executeUpdate();
 
             if(rows > 0){
-                System.out.println("Update Successfull");
+                System.out.println("Update Successful");
             }else{
-                System.out.println("Bus Not Found!");
+                System.out.println("Failed to Update Bus Details!");
                 return;
             }
         } catch (SQLException e) {

@@ -62,23 +62,25 @@ public class BusService {
 
     public void updateBus(Scanner sc) {
         System.out.println("Available Buses to Update");
+        System.out.println();
         viewAllBuses();
-        System.out.print("Enter Bus ID to select bus");
+        System.out.print("Enter Bus ID to select bus: ");
         int busId = Integer.parseInt(sc.nextLine());
         Bus bus = busDAO.getBus(busId);
-        
+
+        if(bus == null) System.out.println("Bus Not Found");
         while (true) {
             System.out.println();
             System.out.println("What do you want to Update");
             System.out.println();
-            System.out.print("1. Bus Name [ " + bus.getBusName() + " ]");
-            System.out.print("2. Source [" + bus.getSource() + "]");
-            System.out.print("3. Destination [" + bus.getDestination() + "]");
-            System.out.print("4. Total Seats [" + bus.getTotalSeats() + "]");
-            System.out.print("5. Bus ticket Fare [" + bus.getPrice() + "]");
-            System.out.print("6. Bus Type [" + bus.getBusType() + "]");
+            System.out.println("1. Bus Name [ " + bus.getBusName() + " ]");
+            System.out.println("2. Source [" + bus.getSource() + "]");
+            System.out.println("3. Destination [" + bus.getDestination() + "]");
+            System.out.println("4. Total Seats [" + bus.getTotalSeats() + "]");
+            System.out.println("5. Bus ticket Fare [" + bus.getPrice() + "]");
+            System.out.println("6. Bus Type [" + bus.getBusType() + "]");
             System.out.println();
-            System.out.print("Choose option to Update field");
+            System.out.println("Choose option to Update field: ");
             int choice = Integer.parseInt(sc.nextLine());
             System.out.println();
 
@@ -88,37 +90,37 @@ public class BusService {
         
             switch (choice) {
                 case 1:
-                    System.out.print("Enter New Bus Name");
+                    System.out.print("Enter New Bus Name: ");
                     column = "bus_name";
                     value = sc.nextLine();
                     break;
                 
                 case 2:
-                    System.out.print("Enter New source");
+                    System.out.print("Enter New source: ");
                     column = "source";
                     value = sc.nextLine();
                     break;
                 
                 case 3:
-                    System.out.print("Enter New Destination");
+                    System.out.print("Enter New Destination: ");
                     column = "destination";
                     value = sc.nextLine();
                     break;
                 
                 case 4:
-                    System.out.print("Enter Total seats");
+                    System.out.print("Enter Total seats: ");
                     column = "total_seats";
                     value = Integer.parseInt(sc.nextLine());
                     break;
                 
                 case 5:
-                    System.out.print("Enter New Ticket fare");
+                    System.out.print("Enter New Ticket fare: ");
                     column = "price";
                     value = Double.parseDouble(sc.nextLine());
                     break;
                 
                 case 6:
-                    System.out.print("Enter Bus Type");
+                    System.out.print("Enter Bus Type: ");
                     column = "bus_type";
                     value = sc.nextLine();
                     break;
@@ -135,13 +137,21 @@ public class BusService {
             if(yN.equalsIgnoreCase("N")){
                 return;
             }
+            System.out.println();
         }
-
+        
     }
 
-    public void deleteBus() {
+    public void deleteBus(Scanner sc) {
         System.out.println("Available Buses to Delete");
+        System.out.println();
         viewAllBuses();
+        System.out.print("Enter Bus ID to select bus: ");
+        int busId = Integer.parseInt(sc.nextLine());
+        Bus bus = busDAO.getBus(busId);
+
+        if(bus == null) System.out.println("Bus Not Found");
+        else System.out.println("Bus Found!");
     }
 
     public void searchBus() {

@@ -135,7 +135,7 @@ public class Main {
                     break;
 
                 case 4:
-                    busService.deleteBus();
+                    busService.deleteBus(sc);
                     break;
 
                 case 5:
