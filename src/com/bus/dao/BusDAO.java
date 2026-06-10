@@ -16,7 +16,7 @@ public class BusDAO {
 
         try (
             Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareCall(query);
+            PreparedStatement ps = con.prepareStatement(query);
         ) {
             ps.setString(1, bus.getBusName());
             ps.setString(2, bus.getSource());
@@ -38,7 +38,7 @@ public class BusDAO {
 
         try (
             Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareCall(query);
+            PreparedStatement ps = con.prepareStatement(query);
         ) {
             ps.setInt(1, busId);
             ResultSet rs = ps.executeQuery();
@@ -62,13 +62,16 @@ public class BusDAO {
         }
     }
 
-    public ArrayList<Bus> getAllBuses(){
-        String query = "select * from buses";
+    public ArrayList<Bus> getBuses(String source, String destination){
+        String query = "SELECT * FROM buses WHERE source = ? AND destination = ?";
 
         try (
             Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareCall(query);
+            PreparedStatement ps = con.prepareStatement(query);
         ) {
+            ps.setString(1, source);
+            ps.setString(2, destination);
+
             ResultSet rs = ps.executeQuery();
 
             ArrayList<Bus> buses = new ArrayList<>();
@@ -95,12 +98,46 @@ public class BusDAO {
         }
     }
 
+    public ArrayList<Bus> getAllBuses(){
+        String query = "SELECT * FROM buses";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+        ) {
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<Bus> buses = new ArrayList<>();
+
+            while(rs.next()){
+                Bus bus = new Bus();
+                
+                bus.setBusId(rs.getInt("bus_id"));
+                bus.setBusName(rs.getString("bus_name"));
+                bus.setSource(rs.getString("source"));
+                bus.setDestination(rs.getString("destination"));
+                bus.setTotalSeats(rs.getInt("total_seats"));
+                bus.setAvailableSeats(rs.getInt("available_seats"));
+                bus.setPrice(rs.getDouble("price"));
+                bus.setBusType(rs.getString("bus_type"));
+
+                buses.add(bus);
+            }
+
+            return buses;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+
     public void updateBusDetails(int busId, String column, Object value) {
         String query = "UPDATE buses SET " + column + " = ? WHERE bus_id = ?";
 
         try (
             Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareCall(query);
+            PreparedStatement ps = con.prepareStatement(query);
         ) {
             ps.setObject(1, value);
             ps.setInt(2, busId);
@@ -118,4 +155,6 @@ public class BusDAO {
             return;
         }
     }
+
+    
 }
