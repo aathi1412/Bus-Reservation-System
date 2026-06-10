@@ -11,11 +11,13 @@ public class BookingService {
 
     public void bookTicket(Scanner sc, int userId) {
        busService.searchBus(sc);
-       System.out.println("choose Bus Id to Book Ticket");
+       System.out.print("choose Bus Id to Book Ticket: ");
        int busId = Integer.parseInt(sc.nextLine());
-       System.out.print("How many Seats to Book");
+       System.out.print("How many Seats to Book: ");
        int seats = Integer.parseInt(sc.nextLine());
        bookingDAO.bookTicket(userId, busId, seats);
+
+       System.out.println("Booking Successful !!!");
 
     }
 
