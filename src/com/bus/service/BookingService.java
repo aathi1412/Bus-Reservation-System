@@ -1,9 +1,22 @@
 package com.bus.service;
 
+import java.util.Scanner;
+
+import com.bus.dao.BookingDAO;
+
 public class BookingService {
 
-    public void bookTicket() {
-       
+    private static BusService busService = new BusService();
+    private static BookingDAO bookingDAO = new BookingDAO();
+
+    public void bookTicket(Scanner sc, int userId) {
+       busService.searchBus(sc);
+       System.out.println("choose Bus Id to Book Ticket");
+       int busId = Integer.parseInt(sc.nextLine());
+       System.out.print("How many Seats to Book");
+       int seats = Integer.parseInt(sc.nextLine());
+       bookingDAO.bookTicket(userId, busId, seats);
+
     }
 
     public void myBookings() {
