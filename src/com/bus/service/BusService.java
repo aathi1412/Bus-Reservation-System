@@ -30,16 +30,17 @@ public class BusService {
         double price = Double.parseDouble(sc.nextLine());
         System.out.print("Enter Bus Type ( AC / NON AC ): ");
         String busType = sc.nextLine();
+        System.out.println();
 
         Bus bus = new Bus(busName, source, destination, seats, seats, price, busType);
         boolean message = busDAO.addBusToDB(bus);
 
         if(message){
-            System.out.println("Bus Added Successfully");
+            System.out.println("Bus Added Successfully !!!");
         }else{
-            System.out.println("Failed to Add Bus!!!");
+            System.out.println("Failed to Add Bus !!!");
         }
-
+        System.out.println();
     }
 
     public void viewAllBuses() {
@@ -58,7 +59,7 @@ public class BusService {
             while (true) {
                 Bus bus = busDAO.getBus(busId);
                 System.out.println();
-                System.out.println("What do you want to Update");
+                System.out.println("What do you want to Update ?");
                 System.out.println();
                 System.out.println("1. Bus Name [ " + bus.getBusName() + " ]");
                 System.out.println("2. Source [" + bus.getSource() + "]");
@@ -67,7 +68,7 @@ public class BusService {
                 System.out.println("5. Bus ticket Fare [" + bus.getPrice() + "]");
                 System.out.println("6. Bus Type [" + bus.getBusType() + "]");
                 System.out.println();
-                System.out.println("Choose option to Update field: ");
+                System.out.print("Choose option to Update field: ");
                 int choice = Integer.parseInt(sc.nextLine());
                 System.out.println();
 
@@ -142,8 +143,10 @@ public class BusService {
         
         try {
             Bus bus = busDAO.getBus(busId);
-            busDAO.deleteBus(bus.getBusId());
-            System.out.println("Bus successfully Deleted !");
+            boolean result = busDAO.deleteBus(bus.getBusId());
+            if (result) {
+                System.out.println("Bus successfully Deleted !");
+            }
         } catch (BusNotFoundException e) {
             System.out.println(e.getMessage());
         } catch(BusHasBookingException e){
