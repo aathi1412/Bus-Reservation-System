@@ -140,19 +140,18 @@ public class BusService {
         viewAllBuses();
         System.out.print("Enter Bus ID to select bus: ");
         int busId = Integer.parseInt(sc.nextLine());
+        System.out.println();
         
         try {
             Bus bus = busDAO.getBus(busId);
-            boolean result = busDAO.deleteBus(bus.getBusId());
-            if (result) {
-                System.out.println("Bus successfully Deleted !");
-            }
+            busDAO.deleteBus(bus.getBusId());
+            System.out.println("Bus successfully Deleted !");
         } catch (BusNotFoundException e) {
             System.out.println(e.getMessage());
         } catch(BusHasBookingException e){
             System.out.println(e.getMessage());
         }
-
+        System.out.println();
     }
 
     public void searchBus(Scanner sc) {

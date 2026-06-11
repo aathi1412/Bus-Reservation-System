@@ -160,8 +160,8 @@ public class BusDAO {
         }
     }
 
-    public boolean deleteBus(int busId) throws BusNotFoundException, BusHasBookingException {
-        String checkBookingquery = "SELECT booking_id FROM bookings WHERE bus_id = ?";
+    public void deleteBus(int busId) throws BusNotFoundException, BusHasBookingException {
+        String checkBookingquery = "SELECT 1 FROM bookings WHERE bus_id = ? LIMIT 1";
         String deleteQuery = "DELETE FROM buses WHERE bus_id = ?";
 
         try (
@@ -173,9 +173,13 @@ public class BusDAO {
                 PreparedStatement checkBookingPs = con.prepareStatement(checkBookingquery);
             ) {
                 checkBookingPs.setInt(1, busId);
-                ResultSet rs = checkBookingPs.executeQuery();
-                if(!rs.next()){
-                    throw new BusHasBookingException("Cannot delete bus. Existing bookings found.!");
+                try (
+                    ResultSet rs = checkBookingPs.executeQuery();
+                ) { 
+                    if(rs.next()){
+                        throw new BusHasBookingException(
+                            "      Cannot delete bus. Existing bookings found.");
+                    }
                 }
             } 
             // delete bus...
@@ -184,13 +188,13 @@ public class BusDAO {
             ) {
                 deleteBusPs.setInt(1, busId);
                 if(deleteBusPs.executeUpdate() != 1){
-                    throw new BusNotFoundException("Bus Not Found Exception !");
+                    throw new BusNotFoundException(
+                        "Bus Not Found Exception !");
                 }
             }
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+             throw new RuntimeException(
+                "Database error while deleting bus", e);
         }
     }
 

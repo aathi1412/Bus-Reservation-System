@@ -31,7 +31,7 @@ public class PrintInFormat {
 
     public void printBookings(ArrayList<Booking> bookings){
         System.out.printf(
-            "%-14s %-21s %-18s %-14s %-8s%n",
+            "%-14s %-21s %-20s %-13s %-8s%n",
             "Booking ID", "Seats Booked", "Booking Date", "Price", "Status"
         );
         

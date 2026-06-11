@@ -36,6 +36,7 @@ public class BookingService {
             try {
                 boolean flag = bookingDAO.bookTicket(userId, busId, seats);
                 Bus bus = busDAO.getBus(busId);
+                
 
                 System.out.println();
 
