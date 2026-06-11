@@ -8,6 +8,7 @@ import com.bus.model.Bus;
 import com.bus.util.PrintInFormat;
 import com.bus.dao.BookingDAO;
 import com.bus.dao.BusDAO;
+import com.bus.exception.BusNotFoundException;
 
 public class BookingService {
 
@@ -32,24 +33,29 @@ public class BookingService {
             }
 
             System.out.println("Available Buses");
-            boolean flag = bookingDAO.bookTicket(userId, busId, seats);
-            Bus bus = busDAO.getBus(busId);
+            try {
+                boolean flag = bookingDAO.bookTicket(userId, busId, seats);
+                Bus bus = busDAO.getBus(busId);
 
-            System.out.println();
+                System.out.println();
 
-            if(flag){
-                System.out.println("Booking Successful !!!");
+                if(flag){
+                    System.out.println("Booking Successful !!!");
 
-                System.out.println("=================");
-                System.out.println("    Ticket   ");
-                System.out.println("=================");
-                System.out.println("Bus Name    : " + bus.getBusName());
-                System.out.println("Source      : " + bus.getSource());
-                System.out.println("Destination : " + bus.getDestination());
-                System.out.println("Seats       : " + seats);
-                System.out.println("Price       : " + booking.getPrice());
-                System.out.println("Status      : " + booking.getStatus());
-            }   
+                    System.out.println("=================");
+                    System.out.println("    Ticket   ");
+                    System.out.println("=================");
+                    System.out.println("Bus Name    : " + bus.getBusName());
+                    System.out.println("Source      : " + bus.getSource());
+                    System.out.println("Destination : " + bus.getDestination());
+                    System.out.println("Seats       : " + seats);
+                    System.out.println("Price       : " + booking.getPrice());
+                    System.out.println("Status      : " + booking.getStatus());
+                }  
+            } catch (BusNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+               
 
             System.out.print("Y to Book Ticket again / N to Back Menu: ");
             String YN = sc.nextLine();

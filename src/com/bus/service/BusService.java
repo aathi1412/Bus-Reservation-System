@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.bus.dao.BusDAO;
+import com.bus.exception.BusHasBookingException;
+import com.bus.exception.BusNotFoundException;
 import com.bus.model.Bus;
 import com.bus.util.PrintInFormat;
 
@@ -52,81 +54,83 @@ public class BusService {
         viewAllBuses();
         System.out.print("Enter Bus ID to select bus: ");
         int busId = Integer.parseInt(sc.nextLine());
-        Bus bus = busDAO.getBus(busId);
+        try {
+            while (true) {
+                Bus bus = busDAO.getBus(busId);
+                System.out.println();
+                System.out.println("What do you want to Update");
+                System.out.println();
+                System.out.println("1. Bus Name [ " + bus.getBusName() + " ]");
+                System.out.println("2. Source [" + bus.getSource() + "]");
+                System.out.println("3. Destination [" + bus.getDestination() + "]");
+                System.out.println("4. Total Seats [" + bus.getTotalSeats() + "]");
+                System.out.println("5. Bus ticket Fare [" + bus.getPrice() + "]");
+                System.out.println("6. Bus Type [" + bus.getBusType() + "]");
+                System.out.println();
+                System.out.println("Choose option to Update field: ");
+                int choice = Integer.parseInt(sc.nextLine());
+                System.out.println();
 
-        if(bus == null) System.out.println("Bus Not Found");
-        while (true) {
-            System.out.println();
-            System.out.println("What do you want to Update");
-            System.out.println();
-            System.out.println("1. Bus Name [ " + bus.getBusName() + " ]");
-            System.out.println("2. Source [" + bus.getSource() + "]");
-            System.out.println("3. Destination [" + bus.getDestination() + "]");
-            System.out.println("4. Total Seats [" + bus.getTotalSeats() + "]");
-            System.out.println("5. Bus ticket Fare [" + bus.getPrice() + "]");
-            System.out.println("6. Bus Type [" + bus.getBusType() + "]");
-            System.out.println();
-            System.out.println("Choose option to Update field: ");
-            int choice = Integer.parseInt(sc.nextLine());
-            System.out.println();
+                String column = null;
+                Object value = null;
 
-            String column = null;
-            Object value = null;
+            
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter New Bus Name: ");
+                        column = "bus_name";
+                        value = sc.nextLine();
+                        break;
+                    
+                    case 2:
+                        System.out.print("Enter New source: ");
+                        column = "source";
+                        value = sc.nextLine();
+                        break;
+                    
+                    case 3:
+                        System.out.print("Enter New Destination: ");
+                        column = "destination";
+                        value = sc.nextLine();
+                        break;
+                    
+                    case 4:
+                        System.out.print("Enter Total seats: ");
+                        column = "total_seats";
+                        value = Integer.parseInt(sc.nextLine());
+                        break;
+                    
+                    case 5:
+                        System.out.print("Enter New Ticket fare: ");
+                        column = "price";
+                        value = Double.parseDouble(sc.nextLine());
+                        break;
+                    
+                    case 6:
+                        System.out.print("Enter Bus Type: ");
+                        column = "bus_type";
+                        value = sc.nextLine();
+                        break;
+                    
+                    default:
+                        System.out.println("Invalid Choice. Try Again!!!");
+                        continue;
+                }
 
-        
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter New Bus Name: ");
-                    column = "bus_name";
-                    value = sc.nextLine();
-                    break;
-                
-                case 2:
-                    System.out.print("Enter New source: ");
-                    column = "source";
-                    value = sc.nextLine();
-                    break;
-                
-                case 3:
-                    System.out.print("Enter New Destination: ");
-                    column = "destination";
-                    value = sc.nextLine();
-                    break;
-                
-                case 4:
-                    System.out.print("Enter Total seats: ");
-                    column = "total_seats";
-                    value = Integer.parseInt(sc.nextLine());
-                    break;
-                
-                case 5:
-                    System.out.print("Enter New Ticket fare: ");
-                    column = "price";
-                    value = Double.parseDouble(sc.nextLine());
-                    break;
-                
-                case 6:
-                    System.out.print("Enter Bus Type: ");
-                    column = "bus_type";
-                    value = sc.nextLine();
-                    break;
-                
-                default:
-                    System.out.println("Invalid Choice");
-                    break;
+                busDAO.updateBusDetails(busId, column, value);
+
+                System.out.print("Y to update other field / N for Back to Admin Menu: ");
+                String YN = sc.nextLine();
+                if(YN.equalsIgnoreCase("Y")){
+                    continue;
+                }else{
+                    return;
+                }
             }
-
-            busDAO.updateBusDetails(busId, column, value);
-
-            System.out.print("Y to update other field / N for Back to Admin Menu: ");
-            String YN = sc.nextLine();
-            if(YN.equalsIgnoreCase("Y")){
-                continue;
-            }else{
-                return;
-            }
+        } catch (BusNotFoundException e) {
+            System.out.println(e.getMessage());
         }
-        
+           
     }
 
     public void deleteBus(Scanner sc) {
@@ -135,10 +139,17 @@ public class BusService {
         viewAllBuses();
         System.out.print("Enter Bus ID to select bus: ");
         int busId = Integer.parseInt(sc.nextLine());
-        Bus bus = busDAO.getBus(busId);
+        
+        try {
+            Bus bus = busDAO.getBus(busId);
+            busDAO.deleteBus(bus.getBusId());
+            System.out.println("Bus successfully Deleted !");
+        } catch (BusNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch(BusHasBookingException e){
+            System.out.println(e.getMessage());
+        }
 
-        if(bus == null) System.out.println("Bus Not Found");
-        else System.out.println("Bus Found!");
     }
 
     public void searchBus(Scanner sc) {

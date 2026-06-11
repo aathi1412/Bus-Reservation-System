@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.bus.exception.BusHasBookingException;
+import com.bus.exception.BusNotFoundException;
 import com.bus.model.Bus;
 import com.bus.util.DBConnection;
+
 
 public class BusDAO {
     
@@ -33,7 +36,7 @@ public class BusDAO {
         }
     }
 
-    public Bus getBus(int busId){
+    public Bus getBus(int busId) throws BusNotFoundException{
         String query = "select * from buses where bus_id = ?";
 
         try (
@@ -44,8 +47,7 @@ public class BusDAO {
             ResultSet rs = ps.executeQuery();
 
             Bus bus = new Bus();
-            while(rs.next()){
-
+            if(rs.next()){
                 bus.setBusId(rs.getInt("bus_id"));
                 bus.setBusName(rs.getString("bus_name"));
                 bus.setSource(rs.getString("source"));
@@ -54,6 +56,8 @@ public class BusDAO {
                 bus.setAvailableSeats(rs.getInt("available_seats"));
                 bus.setPrice(rs.getDouble("price"));
                 bus.setBusType(rs.getString("bus_type"));
+            }else{
+                throw new BusNotFoundException("Bus Not Found Exception!");
             }
             return bus;
         } catch (SQLException e) {
@@ -150,6 +154,39 @@ public class BusDAO {
                 System.out.println("Failed to Update Bus Details!");
                 return;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+    }
+
+    public void deleteBus(int busId) throws BusNotFoundException, BusHasBookingException {
+        String checkBookingquery = "SELECT booking_id FROM bookings WHERE bus_id = ?";
+        String deleteQuery = "DELETE FROM buses WHERE bus_id = ?";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            
+        ) {
+            // check booking availablity....
+            try (
+                PreparedStatement checkBookingPs = con.prepareStatement(checkBookingquery);
+            ) {
+                checkBookingPs.setInt(1, busId);
+                ResultSet rs = checkBookingPs.executeQuery();
+                if(!rs.next()){
+                    throw new BusHasBookingException("Cannot delete bus. Existing bookings found.!");
+                }
+            } 
+            // delete bus...
+            try (
+                PreparedStatement deleteBusPs = con.prepareStatement(deleteQuery);
+            ) {
+                if(deleteBusPs.executeUpdate() != 1){
+                    throw new BusNotFoundException("Bus Not Found Exception !");
+                }
+            }
+            
         } catch (SQLException e) {
             e.printStackTrace();
             return;
