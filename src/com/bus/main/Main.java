@@ -185,7 +185,7 @@ public class Main {
                     break;
 
                 case 5:
-                    bookingService.cancekBooking();
+                    bookingService.cancekBooking(userId, sc);
                     break;
 
                 case 6:

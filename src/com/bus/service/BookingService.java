@@ -26,6 +26,11 @@ public class BookingService {
             System.out.print("How many Seats to Book       : ");
             int seats = Integer.parseInt(sc.nextLine());
 
+            if(seats <= 0){
+                System.out.println("Unable to Book" + seats + "Seats" + ". Try to Book Atleast 1 Seat.");
+                return;
+            }
+
             System.out.println("Available Buses");
             boolean flag = bookingDAO.bookTicket(userId, busId, seats);
             Bus bus = busDAO.getBus(busId);
@@ -62,13 +67,20 @@ public class BookingService {
             System.out.println("No Bookings Available");
             return;
         }
-
-        
         print.printBookings(bookings);
     }
 
-    public void cancekBooking() {
-        
+    public void cancekBooking(int userId, Scanner sc) {
+        myBookings(userId);
+        System.out.print("Choose Booking ID to Cancel Ticket: ");
+        int bookingId = Integer.parseInt(sc.nextLine());
+        boolean result = bookingDAO.cancelBooking(bookingId, userId);
+
+        if(result){
+            System.out.println("Successfully Ticket Cancelled");
+        }else{
+            System.out.println("Cancelling Failed !");
+        }
     }
 
     public void viewAllBookings() {
