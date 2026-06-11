@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.bus.exception.BusNotFoundException;
 import com.bus.model.Booking;
+import com.bus.model.Bus;
 import com.bus.util.DBConnection;
 import com.bus.util.FormatDateTime;
 
@@ -19,10 +20,10 @@ public class BookingDAO {
 
     public boolean bookTicket(int userId, int busId, int seats) throws BusNotFoundException{
         try {
-           busDAO.getBus(busId);
+           Bus bus = busDAO.getBus(busId);
 
-            String query1 = "UPDATE buses SET available_seats = available_seats - ? WHERE bus_id = ? AND available_seats >= ?;";
-            String query2 = "INSERT INTO bookings(user_id, bus_id, seats_booked) VALUES(?,?,?)";
+            String updateSeat = "UPDATE buses SET available_seats = available_seats - ? WHERE bus_id = ? AND available_seats >= ?;";
+            String bookTicket = "INSERT INTO bookings(user_id, bus_id, seats_booked, price, status) VALUES(?,?,?,?,?)";
 
             
                 try (
@@ -33,7 +34,7 @@ public class BookingDAO {
                     try{
                         
                         try (
-                            PreparedStatement ps1 = con.prepareStatement(query1);
+                            PreparedStatement ps1 = con.prepareStatement(updateSeat);
                         ) {
                             ps1.setInt(1, seats);
                             ps1.setInt(2, busId);
@@ -46,11 +47,13 @@ public class BookingDAO {
                         } 
 
                         try (
-                            PreparedStatement ps2 = con.prepareStatement(query2);
+                            PreparedStatement ps2 = con.prepareStatement(bookTicket);
                         ) {
-                        ps2.setInt(1, userId);
+                            ps2.setInt(1, userId);
                             ps2.setInt(2, busId);
                             ps2.setInt(3, seats);  
+                            ps2.setDouble(4, seats * bus.getPrice());
+                            ps2.setString(5, "CONFIRMED");
 
                             if(ps2.executeUpdate() != 1){
                                 con.rollback();
