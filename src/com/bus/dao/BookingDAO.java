@@ -92,4 +92,32 @@ public class BookingDAO {
             return null;
         }
 	}
+
+    public ArrayList<Booking> viewAllBookings(){
+        String query = "SELECT booking_id, seats_booked, booking_date, price, status FROM bookings";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+        ) {
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Booking> bookings = new ArrayList<>();
+
+            while(rs.next()){
+                Booking booking = new Booking();
+
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setSeatsBooked(rs.getInt("seats_booked"));
+                booking.setBookingDate(formatDateTime.formatDate(rs.getTimestamp("booking_date")));
+                booking.setPrice(rs.getDouble("price"));
+                booking.setStatus(rs.getString("status"));
+
+                bookings.add(booking);
+            }
+            return bookings;
+        } catch (SQLException e) {
+           e.printStackTrace();
+           return null;
+        }
+    }
 }

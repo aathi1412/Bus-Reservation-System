@@ -16,6 +16,8 @@ public class BookingService {
     private static BookingDAO bookingDAO = new BookingDAO();
     private static BusDAO busDAO = new BusDAO();
 
+    private static PrintInFormat print = new PrintInFormat();
+
     public void bookTicket(Scanner sc, int userId) {
         while (true) {
             busService.searchBus(sc);
@@ -61,7 +63,7 @@ public class BookingService {
             return;
         }
 
-        PrintInFormat print = new PrintInFormat();
+        
         print.printBookings(bookings);
     }
 
@@ -70,7 +72,8 @@ public class BookingService {
     }
 
     public void viewAllBookings() {
-        
+        ArrayList<Booking> booking = bookingDAO.viewAllBookings();
+        print.printBookings(booking);
     }
     
 }
