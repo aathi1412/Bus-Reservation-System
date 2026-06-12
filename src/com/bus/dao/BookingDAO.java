@@ -15,8 +15,8 @@ import com.bus.util.FormatDateTime;
 
 public class BookingDAO {
     
-    private static BusDAO busDAO = new BusDAO();
-    private static FormatDateTime formatDateTime = new FormatDateTime();
+    private BusDAO busDAO = new BusDAO();
+    private FormatDateTime formatDateTime = new FormatDateTime();
 
     public boolean bookTicket(int userId, int busId, int seats) throws BusNotFoundException{
         try {
@@ -98,9 +98,8 @@ public class BookingDAO {
                 bookings.add(booking);
             }
             return bookings;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error while fetching booking", e);
         }
 	}
 
@@ -127,8 +126,7 @@ public class BookingDAO {
             }
             return bookings;
         } catch (SQLException e) {
-           e.printStackTrace();
-           return null;
+           throw new RuntimeException("Database error while fetching booking", e);
         }
     }
 
