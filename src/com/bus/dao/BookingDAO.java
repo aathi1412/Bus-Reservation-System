@@ -72,7 +72,6 @@ public class BookingDAO {
                 e.printStackTrace();
                 return false;
             }
-        
     }
 
 	public ArrayList<Booking> myBookings(int userId) {
