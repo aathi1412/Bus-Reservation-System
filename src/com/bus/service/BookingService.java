@@ -12,12 +12,11 @@ import com.bus.exception.BusNotFoundException;
 
 public class BookingService {
 
-    private static BusService busService = new BusService();
-    private static Booking booking = new Booking();
-    private static BookingDAO bookingDAO = new BookingDAO();
-    private static BusDAO busDAO = new BusDAO();
+    private BusService busService = new BusService();
+    private BookingDAO bookingDAO = new BookingDAO();
+    private BusDAO busDAO = new BusDAO();
 
-    private static PrintInFormat print = new PrintInFormat();
+    private PrintInFormat print = new PrintInFormat();
 
     public void bookTicket(Scanner sc, int userId) {
         while (true) {
