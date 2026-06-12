@@ -117,19 +117,15 @@ public class BusService {
                         System.out.println("Invalid Choice. Try Again!!!");
                         continue;
                 }
-
                 busDAO.updateBusDetails(busId, column, value);
-
-                System.out.print("Y to update other field / N for Back to Admin Menu: ");
-                String YN = sc.nextLine();
-                if(YN.equalsIgnoreCase("Y")){
-                    continue;
-                }else{
-                    return;
-                }
             }
         } catch (BusNotFoundException e) {
             System.out.println(e.getMessage());
+        }
+
+        System.out.print("Y to update other field / N for Back to Admin Menu: ");
+        if(!sc.nextLine().equalsIgnoreCase("Y")){
+            return;
         }
            
     }
