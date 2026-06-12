@@ -77,7 +77,7 @@ public class BookingService {
         print.printBookings(bookings);
     }
 
-    public void cancekBooking(int userId, Scanner sc) {
+    public void cancelBooking(int userId, Scanner sc) {
         myBookings(userId);
         System.out.print("Choose Booking ID to Cancel Ticket: ");
         int bookingId = Integer.parseInt(sc.nextLine());
