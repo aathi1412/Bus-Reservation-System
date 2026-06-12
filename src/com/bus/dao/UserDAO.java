@@ -5,12 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.bus.exception.AuthenticationException;
 import com.bus.model.User;
 import com.bus.util.DBConnection;
 
 public class UserDAO {
-
-    
 
     public boolean registerUser(User user){
         String query = "INSERT INTO users(name, email, phone, password, role) VALUES(?,?,?,?,?);";
@@ -47,20 +46,18 @@ public class UserDAO {
             
             if(rs.next()){
                 User user = new User();
-
                 user.setUserId(rs.getInt("user_id"));
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
                 user.setPhone(rs.getString("phone"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));
-
                 return user;
+            }else{
+                throw new AuthenticationException("Invalid Credintials!"); 
             }
-            
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Database error while validating user", e);
         }
-        return null;
     }
 }
