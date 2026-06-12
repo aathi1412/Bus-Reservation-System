@@ -61,8 +61,7 @@ public class BusDAO {
             }
             return bus;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
+            throw new RuntimeException("Database error while fetching bus", e);
         }
     }
 
@@ -94,11 +93,9 @@ public class BusDAO {
 
                 buses.add(bus);
             }
-
             return buses;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
+            throw new RuntimeException("Database error while fetching bus", e);
         }
     }
 
@@ -130,8 +127,7 @@ public class BusDAO {
 
             return buses;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
+            throw new RuntimeException("Database error while fetching bus", e);
         }
 
     }
