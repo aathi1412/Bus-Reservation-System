@@ -118,15 +118,18 @@ public class BusService {
                         continue;
                 }
                 busDAO.updateBusDetails(busId, column, value);
+
+                System.out.print("Y to update other details / N for Back to Admin Menu: ");
+                if(!sc.nextLine().equalsIgnoreCase("Y")){
+                    System.out.println();
+                    return;
+                }
             }
         } catch (BusNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.print("Y to update other field / N for Back to Admin Menu: ");
-        if(!sc.nextLine().equalsIgnoreCase("Y")){
-            return;
-        }
+        
            
     }
 
@@ -137,6 +140,12 @@ public class BusService {
         System.out.print("Enter Bus ID to select bus: ");
         int busId = Integer.parseInt(sc.nextLine());
         System.out.println();
+
+        System.out.print("Are you Sure to delete? [y/n]: ");
+        if(!sc.nextLine().equalsIgnoreCase("y")){
+            System.out.println();
+            return;
+        }
         
         try {
             Bus bus = busDAO.getBus(busId);
@@ -150,16 +159,23 @@ public class BusService {
         System.out.println();
     }
 
-    public void searchBus(Scanner sc) {
+    public boolean searchBus(Scanner sc) {
         System.out.print("Enter Source: ");
         String source = sc.nextLine();
         System.out.print("Enter Destination: ");
         String destination = sc.nextLine();
         System.out.println();
 
-        ArrayList<Bus> buses = busDAO.getBuses(source, destination);
-        printInFormat.printBuses(buses);
-
+        try {
+            ArrayList<Bus> buses = busDAO.getBuses(source, destination);
+            printInFormat.printBuses(buses);
+        } catch (BusNotFoundException e) {
+            System.out.println("No Buses Found from " + source + " to " + destination);
+            System.out.println();
+            return false;
+        }
+        System.out.println();
+        return true;
     }
     
 }
