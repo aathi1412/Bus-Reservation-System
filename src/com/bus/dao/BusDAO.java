@@ -65,7 +65,7 @@ public class BusDAO {
         }
     }
 
-    public ArrayList<Bus> getBuses(String source, String destination){
+    public ArrayList<Bus> getBuses(String source, String destination) throws BusNotFoundException{
         String query = "SELECT * FROM buses WHERE source = ? AND destination = ?";
 
         try (
@@ -78,6 +78,10 @@ public class BusDAO {
             ResultSet rs = ps.executeQuery();
 
             ArrayList<Bus> buses = new ArrayList<>();
+
+            if(!rs.next()){
+                throw new BusNotFoundException("No Bus Found!");
+            }
 
             while(rs.next()){
                 Bus bus = new Bus();
