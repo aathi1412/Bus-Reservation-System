@@ -20,7 +20,10 @@ public class BookingService {
 
     public void bookTicket(Scanner sc, int userId) {
         while (true) {
-            busService.searchBus(sc);
+            boolean isBusAvailable = busService.searchBus(sc);
+
+            if(!isBusAvailable) return;
+
             System.out.print("choose Bus Id to Book Ticket : ");
             int busId = Integer.parseInt(sc.nextLine());
             System.out.print("How many Seats to Book       : ");
@@ -33,11 +36,12 @@ public class BookingService {
 
             System.out.println("Available Buses");
             try {
-                boolean flag = bookingDAO.bookTicket(userId, busId, seats);
-                Bus bus = busDAO.getBus(busId);
-
+                boolean isbookingSuccessful = bookingDAO.bookTicket(userId, busId, seats);
                 System.out.println();
-                if(flag){
+
+                if(isbookingSuccessful){
+                    Bus bus = busDAO.getBus(busId);
+
                     System.out.println("Booking Successful !!!");
                     System.out.println("===========================");
                     System.out.println("      Booking Details      ");
@@ -52,6 +56,7 @@ public class BookingService {
             } catch (BusNotFoundException e) {
                 System.out.println(e.getMessage());
             }
+
             System.out.println();
             System.out.print("Y to Book Ticket again / N to Back Menu: ");
             if(!sc.nextLine().equalsIgnoreCase("Y")){
@@ -74,13 +79,21 @@ public class BookingService {
         myBookings(userId);
         System.out.print("Choose Booking ID to Cancel Ticket: ");
         int bookingId = Integer.parseInt(sc.nextLine());
+        System.out.println();
+
+        System.out.print("Are you Sure to Cancel? [y/n]: ");
+        if(!sc.nextLine().equalsIgnoreCase("y")){
+            return;
+        }
+
         boolean result = bookingDAO.cancelBooking(bookingId, userId);
 
         if(result){
-            System.out.println("Successfully Ticket Cancelled");
+            System.out.println("Successfully Ticket Cancelled!");
         }else{
-            System.out.println("Cancelling Failed !");
+            System.out.println("Cancelling Failed, Ticket Already Cancelled !");
         }
+        System.out.println();
     }
 
     public void viewAllBookings() {
