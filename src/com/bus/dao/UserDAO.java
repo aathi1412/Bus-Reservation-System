@@ -32,7 +32,7 @@ public class UserDAO {
         }
     }
 
-    public User validateUser(String email, String password){
+    public User validateUser(String email, String password) throws AuthenticationException{
         String query = "SELECT * FROM users WHERE email = ? AND password = ?";
 
         try (
