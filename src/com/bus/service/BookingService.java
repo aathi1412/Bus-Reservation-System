@@ -6,6 +6,7 @@ import java.util.Scanner;
 import com.bus.model.Booking;
 import com.bus.model.Bus;
 import com.bus.util.PrintInFormat;
+import com.bus.util.ReadInputUtil;
 import com.bus.dao.BookingDAO;
 import com.bus.dao.BusDAO;
 import com.bus.exception.BusNotFoundException;
@@ -77,9 +78,7 @@ public class BookingService {
 
     public void cancelBooking(int userId, Scanner sc) {
         myBookings(userId);
-        System.out.print("Choose Booking ID to Cancel Ticket: ");
-        int bookingId = Integer.parseInt(sc.nextLine());
-        System.out.println();
+        int bookingId = ReadInputUtil.readInt("Choose Booking ID to Cancel Ticket: ", sc);
 
         System.out.print("Are you Sure to Cancel? [y/n]: ");
         if(!sc.nextLine().equalsIgnoreCase("y")){

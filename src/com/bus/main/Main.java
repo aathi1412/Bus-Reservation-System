@@ -1,10 +1,12 @@
 package com.bus.main;
 import java.util.Scanner;
 
+import com.bus.exception.AuthenticationException;
 import com.bus.model.User;
 import com.bus.service.BookingService;
 import com.bus.service.BusService;
 import com.bus.service.UserService;
+import com.bus.util.ReadInputUtil;
 
 public class Main {
 
@@ -17,6 +19,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
+            System.out.println();
             System.out.println("===== BUS RESERVATION SYSTEM =====");
             System.out.println();
             System.out.println("1. Register");
@@ -24,8 +27,7 @@ public class Main {
             System.out.println("3. Exit");
             System.out.println();
 
-            System.out.print("Enter Choice: ");
-            int choice = Integer.parseInt(sc.nextLine());
+            int choice = ReadInputUtil.readInt("Enter Choice: ", sc);
 
             switch (choice) {
                 case 1:
@@ -49,7 +51,7 @@ public class Main {
     }
 
     private static void registerUser(Scanner sc){
-
+        System.out.println();
         System.out.println("------ New User Registration ------");
         System.out.println();
 
@@ -63,15 +65,19 @@ public class Main {
         String password = sc.nextLine();
         String role = "USER";
         System.out.println();
-        
 
+        System.out.print("Confirm to Register [y/n]:");
+        if(!sc.nextLine().equalsIgnoreCase("y")){
+            return;
+        }
+        
         User user = new User(name, email, phone, password, role);
         userService.register(user);
-
     }
 
     private static void login(Scanner sc) {
         while (true) {
+            System.out.println();
             System.out.println("-------- Login --------");
             System.out.println();
 
@@ -81,27 +87,27 @@ public class Main {
             String password = sc.nextLine();
             System.out.println();
 
-
-            currentUser = userService.login(email, password);
-
-            if(currentUser == null){
-                System.out.println("Invalid Credintials");
+            System.out.print("Confirm to Login [y/n]: ");
+            if(!sc.nextLine().equalsIgnoreCase("y")){
+                return;
+            }
+            System.out.println();
+            try {
+                currentUser = userService.login(email, password);
+            } catch (AuthenticationException e) {
+                System.out.println("Login Failed  " + e.getMessage());
                 System.out.print("Y to Login Again / N to back to Main Menu: ");
-                String yesOrNo = sc.nextLine();
-                if(yesOrNo.equalsIgnoreCase("Y")){
-                    continue;
-                }else {
+                if(!sc.nextLine().equalsIgnoreCase("Y")){
                     return;
+                }else{
+                    continue;
                 }
             }
-
+            System.out.println("Login Successful!");
+            System.out.println();
             if(currentUser.getRole().equals("ADMIN")){
-                System.out.println("Login Successful - ADMIN");
-                System.out.println();
                 adminMenu(sc);
             } else{
-                System.out.println("Login Successful - USER");
-                System.out.println();
                 userMenu(sc, currentUser.getUserId());
             }
         }
@@ -117,9 +123,7 @@ public class Main {
             System.out.println("6. Logout");
             System.out.println();
 
-            System.out.print("Enter Choice: ");
-            int choice = Integer.parseInt(sc.nextLine());
-            System.out.println();
+            int choice = ReadInputUtil.readInt("Enter Choice: ", sc);
 
             switch (choice) {
                 case 1:
@@ -163,9 +167,7 @@ public class Main {
             System.out.println("6. Logout");
             System.out.println();
 
-            System.out.print("Enter Choice: ");
-            int choice = Integer.parseInt(sc.nextLine());
-            System.out.println();
+            int choice = ReadInputUtil.readInt("Enter Choice: ", sc);
 
             switch (choice) {
                 case 1:

@@ -1,6 +1,7 @@
 package com.bus.service;
 
 import com.bus.dao.UserDAO;
+import com.bus.exception.AuthenticationException;
 import com.bus.model.User;
 
 public class UserService {
@@ -15,7 +16,7 @@ public class UserService {
         }
     }
 
-    public User login(String email, String password){
+    public User login(String email, String password) throws AuthenticationException{
         return userDAO.validateUser(email, password);
     }
 }

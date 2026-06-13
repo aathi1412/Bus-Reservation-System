@@ -8,6 +8,7 @@ import com.bus.exception.BusHasBookingException;
 import com.bus.exception.BusNotFoundException;
 import com.bus.model.Bus;
 import com.bus.util.PrintInFormat;
+import com.bus.util.ReadInputUtil;
 
 public class BusService {
 
@@ -137,9 +138,8 @@ public class BusService {
         System.out.println("Available Buses to Delete");
         System.out.println();
         viewAllBuses();
-        System.out.print("Enter Bus ID to select bus: ");
-        int busId = Integer.parseInt(sc.nextLine());
-        System.out.println();
+
+        int busId = ReadInputUtil.readInt("Enter Bus ID to select bus: ", sc);
 
         System.out.print("Are you Sure to delete? [y/n]: ");
         if(!sc.nextLine().equalsIgnoreCase("y")){
