@@ -57,7 +57,7 @@ public class BusDAO {
                 bus.setPrice(rs.getDouble("price"));
                 bus.setBusType(rs.getString("bus_type"));
             }else{
-                throw new BusNotFoundException("Bus Not Found Exception!");
+                throw new BusNotFoundException("Bus Not Found!");
             }
             return bus;
         } catch (SQLException e) {
@@ -79,10 +79,6 @@ public class BusDAO {
 
             ArrayList<Bus> buses = new ArrayList<>();
 
-            if(!rs.next()){
-                throw new BusNotFoundException("No Bus Found!");
-            }
-
             while(rs.next()){
                 Bus bus = new Bus();
                 
@@ -97,13 +93,16 @@ public class BusDAO {
 
                 buses.add(bus);
             }
+            if(buses.isEmpty()){
+                throw new BusNotFoundException("No Bus Found!");
+            }
             return buses;
         } catch (SQLException e) {
             throw new RuntimeException("Database error while fetching bus", e);
         }
     }
 
-    public ArrayList<Bus> getAllBuses(){
+    public ArrayList<Bus> getAllBuses() throws BusNotFoundException{
         String query = "SELECT * FROM buses";
 
         try (
@@ -128,7 +127,9 @@ public class BusDAO {
 
                 buses.add(bus);
             }
-
+            if(buses.isEmpty()){
+                throw new BusNotFoundException("No Bus Found!");
+            }
             return buses;
         } catch (SQLException e) {
             throw new RuntimeException("Database error while fetching bus", e);

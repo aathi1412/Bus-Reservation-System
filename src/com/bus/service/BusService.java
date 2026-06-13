@@ -45,8 +45,13 @@ public class BusService {
     }
 
     public void viewAllBuses() {
-        ArrayList<Bus> buses = busDAO.getAllBuses();
-        printInFormat.printBuses(buses);
+        try {
+            ArrayList<Bus> buses = busDAO.getAllBuses();
+            printInFormat.printBuses(buses);
+        } catch (BusNotFoundException e) {
+            System.out.println("No Buses Found");
+            System.out.println();
+        }
     }
 
     public void updateBus(Scanner sc) {

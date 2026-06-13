@@ -94,6 +94,7 @@ public class Main {
             System.out.println();
             try {
                 currentUser = userService.login(email, password);
+                break;
             } catch (AuthenticationException e) {
                 System.out.println("Login Failed  " + e.getMessage());
                 System.out.print("Y to Login Again / N to back to Main Menu: ");
@@ -103,20 +104,21 @@ public class Main {
                     continue;
                 }
             }
-            System.out.println("Login Successful!");
-            System.out.println();
-            if(currentUser.getRole().equals("ADMIN")){
-                adminMenu(sc);
-            } else{
-                userMenu(sc, currentUser.getUserId());
-            }
         }
+        System.out.println("Login Successful!");
+        System.out.println();
+        if(currentUser.getRole().equals("ADMIN")){
+            adminMenu(sc);
+        } else{
+            userMenu(sc, currentUser.getUserId());
+        }
+        
     }
 
     private static void adminMenu(Scanner sc){
         while(true){
             System.out.println("1. Add Bus");
-            System.out.println("2. View Buses");
+            System.out.println("2. View All Buses");
             System.out.println("3. Update Bus");
             System.out.println("4. Delete Bus");
             System.out.println("5. View Bookings");
