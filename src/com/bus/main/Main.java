@@ -1,4 +1,5 @@
 package com.bus.main;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.bus.exception.AuthenticationException;
@@ -61,16 +62,28 @@ public class Main {
         String phone = sc.nextLine();
         System.out.print("Enter email: ");
         String email = sc.nextLine();
+        System.out.println();
+
+        try {
+            boolean isValid = userService.checkExistingEmail(email);
+            if(!isValid){
+                System.out.println(".................Email Already Registered!");
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.print("Enter Password: ");
         String password = sc.nextLine();
         String role = "USER";
         System.out.println();
 
-        System.out.print("Confirm to Register [y/n]:");
+        System.out.print("Confirm to Register [y/n]: ");
         if(!sc.nextLine().equalsIgnoreCase("y")){
             return;
         }
-        
+
         User user = new User(name, email, phone, password, role);
         userService.register(user);
     }
