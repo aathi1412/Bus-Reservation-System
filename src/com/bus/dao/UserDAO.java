@@ -60,4 +60,23 @@ public class UserDAO {
             throw new RuntimeException("Database error while validating user", e);
         }
     }
+
+    public boolean checkExistingEmail(String email) throws SQLException{
+        String query = "SELECT email FROM users WHERE email = ?";
+
+        try (
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(query);
+        ) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new SQLException("Database Error " + e.getMessage());
+        }
+    }
 }
